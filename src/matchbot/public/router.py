@@ -35,6 +35,10 @@ logger = logging.getLogger(__name__)
 
 _community_cache: dict = {}
 _CACHE_TTL = 30.0  # seconds
+_CAMP_DIRECTORY_URL = (
+    "https://docs.google.com/spreadsheets/d/1pR6kqBTIYLal2GNN6mJ_ueGygaWLo6R2HB5wQhUlBDw/"
+    "edit?gid=1307777311#gid=1307777311"
+)
 
 
 def clear_community_cache() -> None:
@@ -572,6 +576,18 @@ _HOME_EXTRA_CSS = """
 .hero h1 { margin: 0 0 12px; font-family: "Anton", Impact, sans-serif; font-size: clamp(36px, 8vw, 64px); font-weight: 400; line-height: 0.95; letter-spacing: 0.01em; }
 .hero p { margin: 0; font-size: 16px; line-height: 1.8; color: #4a4a4a; max-width: 52ch; }
 .hero p + p { margin-top: 12px; }
+.sunset-notice {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 1.5px solid rgba(255, 146, 0, 0.55);
+  border-radius: 16px;
+  background: rgba(255, 246, 226, 0.95);
+  color: #221e21;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.sunset-notice p { margin: 0; }
+.sunset-notice a { color: #000; font-weight: 700; }
 .intro-panel {
   margin-bottom: 28px;
   padding: 18px 16px;
@@ -718,6 +734,9 @@ _HOME_EXTRA_CSS = """
 
 _HOME_BODY = """
   <main class="page-wrap">
+    <section class="sunset-notice" aria-label="Matchbot sunset notice">
+      <p>We learned a lot from Matchbot, but we’re sunsetting it—at least in its current format. Looking for a camp? Visit the <a href="__CAMP_DIRECTORY_URL__" target="_blank" rel="noopener noreferrer">camp directory</a>.</p>
+    </section>
     <section class="mobile-intake-banner" aria-label="Submit a post">
       <div class="mobile-intake-banner__eyebrow">Ready To Join?</div>
       <div class="mobile-intake-banner__row">
@@ -1237,9 +1256,9 @@ def _build_home_page(base_url: str) -> str:
         + "</head>\n<body>\n"
         + nav
         + "\n"
-        + _HOME_BODY.replace("__COMMUNITY_FEEDBACK_URL__", feedback_url).replace(
-            "__PAGE_FOOTER__", footer_html
-        )
+        + _HOME_BODY.replace("__CAMP_DIRECTORY_URL__", _CAMP_DIRECTORY_URL)
+        .replace("__COMMUNITY_FEEDBACK_URL__", feedback_url)
+        .replace("__PAGE_FOOTER__", footer_html)
         + "<script>\n"
         + _TAXONOMY_JS
         + _HOME_JS

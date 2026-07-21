@@ -62,6 +62,13 @@ def test_community_page_renders(monkeypatch, tmp_path) -> None:
         assert 'rel="icon"' in response.text
         assert "/favicon.ico" in response.text
         assert "/site.webmanifest" in response.text
+        assert "We learned a lot from Matchbot" in response.text
+        assert "we’re sunsetting it—at least in its current format" in response.text
+        assert (
+            'href="https://docs.google.com/spreadsheets/d/1pR6kqBTIYLal2GNN6mJ_ueGygaWLo6R2HB5wQhUlBDw/edit?gid=1307777311#gid=1307777311"'
+            in response.text
+        )
+        assert 'target="_blank" rel="noopener noreferrer"' in response.text
 
         gear = client.get("/community/gear")
         assert gear.status_code == 200
